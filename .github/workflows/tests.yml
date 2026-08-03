@@ -23,7 +23,7 @@ jobs:
           - os: macos-15
             build_mode: test-bot
           - os: macos-15-intel
-            build_mode: source-dependency
+            build_mode: manual-bottle
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
@@ -66,9 +66,9 @@ jobs:
         run: brew test-bot --only-formulae --root-url=https://ghcr.io/v2/regulusleow/homebrew-tap
 
       - name: Build and test Formula on Intel
-        if: github.event_name == 'pull_request' && matrix.build_mode == 'source-dependency'
+        if: github.event_name == 'pull_request' && matrix.build_mode == 'manual-bottle'
         run: |
-          brew install --build-from-source node@22
+          brew install node@22
           brew install --build-bottle regulusleow/tap/astrolabe
           brew test regulusleow/tap/astrolabe
           brew audit --new regulusleow/tap/astrolabe
