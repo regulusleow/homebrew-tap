@@ -3,9 +3,9 @@ require "json"
 class Astrolabe < Formula
   desc "Runtime UI inspection for AI coding agents"
   homepage "https://github.com/regulusleow/astrolabe"
-  url "https://github.com/regulusleow/astrolabe/archive/06ad8f58425453dfbbe73d8e63ff5dab178d3129.tar.gz"
+  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.1.0.tar.gz"
   version "2.1.0"
-  sha256 "f9e9f3b3bf92c92a9e067bdf02276b120db1c410ed135b033b2ad164d00afea2"
+  sha256 "ede20cacbb53ccb20886561890c15f4a932ebff90fe1680dd607de879dac6fa6"
   license "Apache-2.0"
 
   depends_on xcode: ["15.0", :build]
