@@ -38,7 +38,12 @@ class Astrolabe < Formula
 
   def caveats
     <<~EOS
-      Configure detected AI clients explicitly after installation:
+      Configure Astrolabe for a specific AI client after installation:
+        astrolabe install --client codex
+        astrolabe install --client opencode
+        astrolabe install --client claude-code
+
+      Or configure every detected AI client:
         astrolabe install --all-detected
 
       Homebrew lifecycle operations do not modify AI-client configuration.

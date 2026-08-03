@@ -8,7 +8,15 @@ Install Astrolabe:
 brew install regulusleow/tap/astrolabe
 ```
 
-Configure detected AI clients explicitly after installation:
+Configure Astrolabe for a specific AI client:
+
+```bash
+astrolabe install --client codex
+astrolabe install --client opencode
+astrolabe install --client claude-code
+```
+
+To configure every detected AI client at once:
 
 ```bash
 astrolabe install --all-detected
