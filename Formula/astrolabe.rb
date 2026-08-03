@@ -1,17 +1,12 @@
 require "json"
+require "open3"
 
 class Astrolabe < Formula
   desc "Runtime UI inspection for AI coding agents"
   homepage "https://github.com/regulusleow/astrolabe"
-  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.1.0.tar.gz"
-  sha256 "ede20cacbb53ccb20886561890c15f4a932ebff90fe1680dd607de879dac6fa6"
+  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.1.1.tar.gz"
+  sha256 "b4093192fb6f7fe71c4f4a7c99bd1cf588d9db8daa2ba4abe2118222b36b6ab9"
   license "Apache-2.0"
-
-  bottle do
-    root_url "https://ghcr.io/v2/regulusleow/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ad1c9814147915c0cd4472de4a567b6371e6136046094d14b31f24f9773c2501"
-    sha256 cellar: :any_skip_relocation, sequoia:       "0dd55814a4e745b8348ef3572964114db2165661205bab37f16fa671c688434a"
-  end
 
   depends_on xcode: ["15.0", :build]
   depends_on macos: :ventura
@@ -69,6 +64,37 @@ class Astrolabe < Formula
 
     doctor = JSON.parse(shell_output("#{bin}/astrolabe doctor --verbose --json"))
     assert doctor.fetch("success")
+
+    mcp_input = [
+      {
+        jsonrpc: "2.0",
+        id:      1,
+        method:  "initialize",
+        params:  {
+          protocolVersion: "2025-06-18",
+          capabilities:    {},
+          clientInfo:      { name: "homebrew-test", version: "1.0.0" },
+        },
+      },
+      {
+        jsonrpc: "2.0",
+        method:  "notifications/initialized",
+        params:  {},
+      },
+      {
+        jsonrpc: "2.0",
+        id:      2,
+        method:  "tools/call",
+        params:  { name: "list_apps", arguments: {} },
+      },
+    ].map(&:to_json).join("\n") + "\n"
+    stdout, stderr, status = Open3.capture3(bin/"astrolabe", "mcp", stdin_data: mcp_input)
+    assert status.success?, stderr
+    responses = stdout.each_line.map { |line| JSON.parse(line) }
+    tool_response = responses.find { |response| response["id"] == 2 }
+    refute_nil tool_response
+    assert tool_response.dig("result", "structuredContent", "success"), stdout
+
     refute_path_exists testpath/".codex/config.toml"
     refute_path_exists testpath/".config/opencode/opencode.json"
     refute_path_exists testpath/".claude.json"
