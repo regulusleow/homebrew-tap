@@ -7,6 +7,12 @@ class Astrolabe < Formula
   sha256 "ede20cacbb53ccb20886561890c15f4a932ebff90fe1680dd607de879dac6fa6"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://ghcr.io/v2/regulusleow/tap"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ad1c9814147915c0cd4472de4a567b6371e6136046094d14b31f24f9773c2501"
+    sha256 cellar: :any_skip_relocation, sequoia:       "0dd55814a4e745b8348ef3572964114db2165661205bab37f16fa671c688434a"
+  end
+
   depends_on xcode: ["15.0", :build]
   depends_on macos: :ventura
   depends_on "node@22"
