@@ -4,7 +4,6 @@ class Astrolabe < Formula
   desc "Runtime UI inspection for AI coding agents"
   homepage "https://github.com/regulusleow/astrolabe"
   url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.1.0.tar.gz"
-  version "2.1.0"
   sha256 "ede20cacbb53ccb20886561890c15f4a932ebff90fe1680dd607de879dac6fa6"
   license "Apache-2.0"
 
