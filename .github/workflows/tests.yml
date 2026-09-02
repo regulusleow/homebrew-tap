@@ -50,7 +50,8 @@ jobs:
 
       - run: brew test-bot --only-cleanup-before
       - run: brew test-bot --only-setup
-      - run: brew test-bot --only-tap-syntax
+      - if: matrix.build_mode == 'test-bot'
+        run: brew test-bot --only-tap-syntax
 
       - name: Encode the registry token
         id: registry-token
