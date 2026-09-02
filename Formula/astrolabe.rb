@@ -4,8 +4,8 @@ require "open3"
 class Astrolabe < Formula
   desc "Runtime UI inspection for AI coding agents"
   homepage "https://github.com/regulusleow/astrolabe"
-  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.2.2.tar.gz"
-  sha256 "ceec971c29a109106a7dab1eb078cb4a8c91d4ff592947f5476e4ab42486223d"
+  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.2.3.tar.gz"
+  sha256 "fbfbfa089da55c73a3e52b9d6318b27f334d836d824d048d7ecce2f8f6d373ba"
   license "Apache-2.0"
 
   bottle do
