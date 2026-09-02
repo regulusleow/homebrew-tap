@@ -10,7 +10,7 @@ class Astrolabe < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/regulusleow/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "36c147246abeafc9628dfee6c746738c165fffcc2feca38731dc7efa8786dc01"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2fd5c5075b9e4944c5cea5cb1fad9c6893fcb935ffc55a80e67431fe28140ff2"
   end
 
   depends_on xcode: ["15.0", :build]
