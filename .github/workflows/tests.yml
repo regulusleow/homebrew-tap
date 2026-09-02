@@ -45,6 +45,9 @@ jobs:
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ matrix.os }}-rubygems-
 
+      - name: Test CI helpers
+        run: bash tests/install-node.test.sh
+
       - run: brew test-bot --only-cleanup-before
       - run: brew test-bot --only-setup
       - run: brew test-bot --only-tap-syntax
@@ -68,7 +71,7 @@ jobs:
       - name: Build and test Formula on Intel
         if: github.event_name == 'pull_request' && matrix.build_mode == 'manual-bottle'
         run: |
-          brew install node@22
+          bash scripts/ci/install-node.sh
           brew install --build-bottle regulusleow/tap/astrolabe
           brew test regulusleow/tap/astrolabe
           brew audit --new regulusleow/tap/astrolabe
