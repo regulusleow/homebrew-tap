@@ -2,15 +2,15 @@
 set -euo pipefail
 
 TEST_ROOT="$(mktemp -d -t astrolabe-node-test)"
-trap 'rm -rf "$TEST_ROOT"' EXIT
+trap 'rm -rf "${TEST_ROOT}"' EXIT
 
-mkdir -p "$TEST_ROOT/bin" "$TEST_ROOT/node/bin"
+mkdir -p "${TEST_ROOT}/bin" "${TEST_ROOT}/node/bin"
 
-cat > "$TEST_ROOT/bin/brew" <<'SCRIPT'
+cat > "${TEST_ROOT}/bin/brew" <<'SCRIPT'
 #!/usr/bin/env bash
 set -euo pipefail
 
-case "$1" in
+case "${1}" in
   install)
     exit "${TEST_INSTALL_STATUS:?}"
     ;;
@@ -30,15 +30,15 @@ case "$1" in
 esac
 SCRIPT
 
-cat > "$TEST_ROOT/node/bin/node" <<'SCRIPT'
+cat > "${TEST_ROOT}/node/bin/node" <<'SCRIPT'
 #!/usr/bin/env bash
 exit "${TEST_NODE_STATUS:?}"
 SCRIPT
 
-chmod +x "$TEST_ROOT/bin/brew" "$TEST_ROOT/node/bin/node"
+chmod +x "${TEST_ROOT}/bin/brew" "${TEST_ROOT}/node/bin/node"
 
-export PATH="$TEST_ROOT/bin:$PATH"
-export TEST_NODE_PREFIX="$TEST_ROOT/node"
+export PATH="${TEST_ROOT}/bin:${PATH}"
+export TEST_NODE_PREFIX="${TEST_ROOT}/node"
 
 TEST_INSTALL_STATUS=0 \
 TEST_NODE_INSTALLED=no \
