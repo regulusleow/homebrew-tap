@@ -11,10 +11,10 @@ class Astrolabe < Formula
   bottle do
     root_url "https://ghcr.io/v2/regulusleow/tap"
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "36c147246abeafc9628dfee6c746738c165fffcc2feca38731dc7efa8786dc01"
-    sha256 cellar: :any_skip_relocation, sequoia:       "ff776b14c2fd3d839b0dd55b5f75a7500ea50627f73c7f61f08c03fdc1d9492a"
   end
 
   depends_on xcode: ["15.0", :build]
+  depends_on arch: :arm64
   depends_on macos: :ventura
   depends_on "node@22"
 
@@ -24,7 +24,7 @@ class Astrolabe < Formula
               '["build", "-c", "release", "--product", "astrolabe"]',
               '["build", "--disable-sandbox", "-c", "release", "--product", "astrolabe"]'
     system "npm", "ci"
-    architecture = Hardware::CPU.arm? ? "arm64" : "x86_64"
+    architecture = "arm64"
     distribution = buildpath/"astrolabe-distribution"
     system "npm", "run", "distribution:assemble", "--",
            "--output", distribution,
@@ -59,7 +59,7 @@ class Astrolabe < Formula
     assert_equal version.to_s, manifest.fetch("version")
     assert_equal "homebrew", manifest.fetch("channel")
     assert_equal "darwin", manifest.fetch("platform")
-    assert_equal Hardware::CPU.arm? ? "arm64" : "x86_64", manifest.fetch("architecture")
+    assert_equal "arm64", manifest.fetch("architecture")
 
     assert_path_exists libexec/"bin/astrolabe"
     assert_path_exists libexec/"libexec/astrolabe-native"
