@@ -16,15 +16,7 @@ defaults:
 
 jobs:
   test-bot:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-15
-            build_mode: test-bot
-          - os: macos-15-intel
-            build_mode: manual-bottle
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-15
     permissions:
       actions: read
       checks: read
@@ -42,16 +34,12 @@ jobs:
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
-          key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-          restore-keys: ${{ matrix.os }}-rubygems-
-
-      - name: Test CI helpers
-        run: bash tests/install-node.test.sh
+          key: macos-15-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: macos-15-rubygems-
 
       - run: brew test-bot --only-cleanup-before
       - run: brew test-bot --only-setup
-      - if: matrix.build_mode == 'test-bot'
-        run: brew test-bot --only-tap-syntax
+      - run: brew test-bot --only-tap-syntax
 
       - name: Encode the registry token
         id: registry-token
@@ -64,26 +52,15 @@ jobs:
           echo "token=$encoded_token" >> "$GITHUB_OUTPUT"
 
       - name: Build and test Formulae
-        if: github.event_name == 'pull_request' && matrix.build_mode == 'test-bot'
+        if: github.event_name == 'pull_request'
         env:
           HOMEBREW_DOCKER_REGISTRY_TOKEN: ${{ steps.registry-token.outputs.token }}
         run: brew test-bot --only-formulae --root-url=https://ghcr.io/v2/regulusleow/homebrew-tap
-
-      - name: Build and test Formula on Intel
-        if: github.event_name == 'pull_request' && matrix.build_mode == 'manual-bottle'
-        run: |
-          bash scripts/ci/install-node.sh
-          brew install --build-bottle regulusleow/tap/astrolabe
-          brew test regulusleow/tap/astrolabe
-          brew audit --new regulusleow/tap/astrolabe
-          brew bottle --json \
-            --root-url=https://ghcr.io/v2/regulusleow/homebrew-tap \
-            regulusleow/tap/astrolabe
 
       - name: Upload bottles as artifacts
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: bottles_${{ matrix.os }}
+          name: bottles_macos-15
           path: '*.bottle.*'
           if-no-files-found: error
