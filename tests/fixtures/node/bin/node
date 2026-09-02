@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+exit "${TEST_NODE_STATUS:?}"

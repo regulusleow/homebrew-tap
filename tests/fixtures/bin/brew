@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "${1}" in
+  install)
+    exit "${TEST_INSTALL_STATUS:?}"
+    ;;
+  list)
+    if [[ "${TEST_NODE_INSTALLED:?}" == "yes" ]]
+    then
+      printf 'node@22 22.23.2_1\n'
+      exit 0
+    fi
+    exit 1
+    ;;
+  --prefix)
+    printf '%s\n' "${TEST_NODE_PREFIX:?}"
+    ;;
+  *)
+    exit 64
+    ;;
+esac

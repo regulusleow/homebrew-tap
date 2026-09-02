@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if brew install node@22; then
+if brew install node@22
+then
   exit 0
 fi
 
