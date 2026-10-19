@@ -50,6 +50,6 @@ jobs:
           fi
 
       - name: Push commits
-        uses: Homebrew/actions/git-try-push@9af03b7ae3f9e2ae5c174f659d5c3909f7e7dbac
+        uses: Homebrew/actions/git-try-push@4790763c0a3ba4036f72634dc079c4a7dfcd4878
         with:
           branch: main
