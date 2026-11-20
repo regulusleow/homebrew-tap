@@ -4,14 +4,9 @@ require "open3"
 class Astrolabe < Formula
   desc "Runtime UI inspection for AI coding agents"
   homepage "https://github.com/regulusleow/astrolabe"
-  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.2.3.tar.gz"
-  sha256 "fbfbfa089da55c73a3e52b9d6318b27f334d836d824d048d7ecce2f8f6d373ba"
+  url "https://github.com/regulusleow/astrolabe/archive/refs/tags/2.3.0.tar.gz"
+  sha256 "0657eb9976e8952667c1f822135a3cd921b4aba143b7fccc1988e5a5cbc4d2c3"
   license "Apache-2.0"
-
-  bottle do
-    root_url "https://ghcr.io/v2/regulusleow/tap"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2fd5c5075b9e4944c5cea5cb1fad9c6893fcb935ffc55a80e67431fe28140ff2"
-  end
 
   depends_on xcode: ["15.0", :build]
   depends_on arch: :arm64
